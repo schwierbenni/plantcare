@@ -2,7 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 const protectedRoutes = ['/today', '/my-plants', '/profile']
-const publicRoutes = ['/login', '/guides', '/auth/callback', '/']
+const publicRoutes = ['/login', '/signup', '/guides', '/auth/callback', '/']
 
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request })
@@ -38,7 +38,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  if (path === '/login' && user) {
+  if ((path === '/login' || path === '/signup') && user) {
     const url = request.nextUrl.clone()
     url.pathname = '/today'
     return NextResponse.redirect(url)
