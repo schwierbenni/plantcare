@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #FAF7EE;
+  --foreground: #26331F;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  background-color: #FAF7EE;
+  color: #26331F;
+  overscroll-behavior: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.safe-top { padding-top: env(safe-area-inset-top); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+
+.plant-sway {
+  transform-origin: bottom center;
+  animation: sway 4s ease-in-out infinite;
+}
+
+.plant-sway-delay-1 { animation-delay: 0.7s; }
+.plant-sway-delay-2 { animation-delay: 1.4s; }
+.plant-sway-delay-3 { animation-delay: 2.1s; }
+.plant-sway-delay-4 { animation-delay: 0.3s; }
+
+.leaf-origin { transform-origin: 0% 100%; }
+.leaf-origin-right { transform-origin: 100% 100%; }
+.leaf-origin-center { transform-origin: 50% 100%; }
+
+.touch-feedback:active {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+}
