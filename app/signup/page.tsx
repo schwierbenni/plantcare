@@ -1,25 +1,31 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { AnimatedPlant, FloatingParticles } from '@/components/ui/AnimatedPlant'
 import { Button } from '@/components/ui/Button'
 
-export default function LoginPage() {
+export default function SignupPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const supabase = createClient()
+  const router = useRouter()
 
-  async function handleLogin(e: React.FormEvent) {
+  async function handleSignup(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError('')
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    const { error } = await supabase.auth.signUp({ email, password })
     setLoading(false)
-    if (error) setError(error.message)
+    if (error) {
+      setError(error.message)
+    } else {
+      router.push('/today')
+    }
   }
 
   return (
@@ -59,10 +65,10 @@ export default function LoginPage() {
 
         <div className="animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
           <h1 className="text-[32px] font-bricolage font-bold text-dark mb-8 leading-tight">
-            Willkommen
+            Konto erstellen
           </h1>
 
-          <form onSubmit={handleLogin} className="flex flex-col gap-4">
+          <form onSubmit={handleSignup} className="flex flex-col gap-4">
             <input
               type="email"
               value={email}
@@ -81,14 +87,14 @@ export default function LoginPage() {
             {error && <p className="text-red-500 text-[13px] font-nunito">{error}</p>}
 
             <Button type="submit" loading={loading} size="lg" className="w-full">
-              Anmelden
+              Registrieren
             </Button>
           </form>
 
           <p className="text-center text-muted text-[14px] font-nunito mt-6">
-            Noch kein Konto?{' '}
-            <Link href="/signup" className="text-primary font-semibold">
-              Registrieren
+            Bereits ein Konto?{' '}
+            <Link href="/login" className="text-primary font-semibold">
+              Anmelden
             </Link>
           </p>
         </div>
